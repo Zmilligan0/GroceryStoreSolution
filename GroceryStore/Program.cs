@@ -1,4 +1,5 @@
 using GroceryStore.Data;
+using GroceryStoreSystem;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,8 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//code for the GroceryStoreDB connection string
+var connectionStringGroceryStore = builder.Configuration.GetConnectionString("GroceryStoreDB");
+
+//register connection string with IServicesCollection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+//regsiter services elsewhere dod do dod dododododo
+builder.Services.GroceryStoreSystemBackendDependencies(options =>
+    options.UseSqlServer(connectionStringGroceryStore));
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

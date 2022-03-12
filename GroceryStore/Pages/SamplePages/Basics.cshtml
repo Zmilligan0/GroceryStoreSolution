@@ -1,0 +1,33 @@
+﻿@page "{id?}"
+@model GroceryStore.Pages.SamplePages.BasicsModel
+@{
+    //Title for browser tab
+    ViewData["Title"] = "Review page basics";
+}
+<h1>Basics of razor page</h1>
+
+
+<h3>Demo of on get proccessing</h3>
+
+@if (string.IsNullOrWhiteSpace(Model.MyName))
+{
+    <p>The random number is odd.</p>
+}
+else
+{
+    <p>@Model.MyName</p>
+}
+
+<h3>Demo Of OnPost </h3>
+
+<form method="post">
+    <label>
+        Enter A Number
+        <input type="number" asp-for="id"/><br />
+    </label>
+    <button type="submit" value="A" id="theButton" name="theButton">A button</button>
+    &nbsp;&nbsp; @*white space*@
+    <button type="submit" value="B" id="theButton" name="theButton">B button</button>
+</form>
+<br />
+<p style="color:forestgreen; font-weight:bold;">@Model.FeedBack</p>
