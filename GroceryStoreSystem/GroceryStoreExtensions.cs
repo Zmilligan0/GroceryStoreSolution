@@ -1,4 +1,5 @@
-﻿using GroceryStoreSystem.DAL;
+﻿using GroceryStoreSystem.BLL;
+using GroceryStoreSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +18,18 @@ namespace GroceryStoreSystem
             services.AddDbContext<GrocerylistContext>(options);
 
             //add services with .AddTransient
+            services.AddTransient<CatergoryServices>((serviceProvider) =>
+            {
+                var context = serviceProvider.GetRequiredService<GrocerylistContext>();
+
+                return new CatergoryServices(context);
+            });
+            services.AddTransient<ProductServices>((serviceProvider) =>
+            {
+                var context = serviceProvider.GetRequiredService<GrocerylistContext>();
+
+                return new ProductServices(context);
+            });
         }
     }
 }

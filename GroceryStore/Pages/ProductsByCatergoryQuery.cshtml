@@ -1,0 +1,116 @@
+﻿@page "{CatergoryId?}"
+@model GroceryStore.Pages.SamplePages.ProductsByCatergoryQueryModel
+@{
+    ViewData["Title"] = "Products by Catergory";
+}
+<h1>Products by Catergory</h1>
+
+@section CustomCSS{
+    <partial name="_MyCustomCSS"/>
+}
+
+<section class="setflex">
+    <div class="onehalf">
+
+        <blockquote>
+            Produts by catergory demostration
+        </blockquote>
+
+        @if(Model.hasFeedBack)
+        {
+            <p>@Model.FeedBack</p>
+
+        }
+
+        @if (Model.hasErrorMsg)
+        {
+            <p style="color:firebrick; font-weight:bold">@Model.ErrorMsg</p>
+    
+        }
+
+        <form method="post">
+            <label>
+                Select catergory to view products
+                <select asp-for="CatergoryId">
+                    <option value="0">Select Catergory . . .</option>
+                    @foreach(var item in Model.CatergoryList)
+                    {
+                        if (Model.CatergoryId == item.ValueId)
+                        {
+                            <option value="@item.ValueId" selected>@item.DisplayText</option>
+                        }
+                        else
+                        {
+                            <option value="@item.ValueId">@item.DisplayText</option>
+                        }
+
+                    }
+                </select>
+            </label>
+            <br/>
+            <button type="submit">Find Products</button>
+        </form>
+    </div>
+    <div class="onehalf">
+        @if(Model.ProductsByCatergory != null)
+        {
+            if(Model.ProductsByCatergory.Count() == 0)
+            {
+                <p style="color:blue; font-weight:bold;"> no catergory with product on file</p>
+            }
+            else
+            {
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Sale Price</th>
+                            <th>Discount</th>
+                            <th>Unit Size</th>
+                            <th>Taxable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.ProductsByCatergory)
+                        {
+                            <tr>
+                                <td>@item.Description</td>
+                                <td>@item.Price</td>
+                                <td>@item.SalePrice</td>
+                                <td>@item.Discount</td>
+                                <td>@item.UnitSize</td>
+                                <td>@item.Taxable</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr colspan="6">
+                            <td>
+                                @{
+                                    foreach (var pageRef in Model.Pager)
+                                    {
+                                        if(pageRef == Model.Pager.CurrentPage)
+                                        {
+                                            //bold the current page number
+                                            <b>@pageRef.Text</b>
+                                        }
+                                        else
+                                        {
+                                            <a title="Page @pageRef.Page"
+                                            asp-page="/ProductsByCatergoryQuery"
+                                            asp-route-currentPage="@pageRef.Page">
+                                            @pageRef.Text</a>
+                                        }
+                                    }
+                                }
+
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+        }
+    </div>
+
+</section>
