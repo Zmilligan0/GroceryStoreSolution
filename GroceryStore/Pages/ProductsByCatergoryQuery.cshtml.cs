@@ -6,7 +6,7 @@ using GroceryStoreSystem.BLL;
 using GroceryStoreSystem.ViewModels;
 using WebApp.Helpers;
 
-namespace GroceryStore.Pages.SamplePages
+namespace GroceryStore.Pages
 {
     public class ProductsByCatergoryQueryModel : PageModel
     {

@@ -1,5 +1,5 @@
 ﻿@page "{CatergoryId?}"
-@model GroceryStore.Pages.SamplePages.ProductsByCatergoryQueryModel
+@model GroceryStore.Pages.ProductsByCatergoryQueryModel
 @{
     ViewData["Title"] = "Products by Catergory";
 }
@@ -75,7 +75,10 @@
                         @foreach(var item in Model.ProductsByCatergory)
                         {
                             <tr>
-                                <td>@item.Description</td>
+                                @*Description text will redirect to crud page*@
+                                <td>
+                                    <a href="/CRUDProductModel/@item.ProductId">
+                                    @item.Description</a></td>
                                 <td>@item.Price</td>
                                 <td>@item.SalePrice</td>
                                 <td>@item.Discount</td>

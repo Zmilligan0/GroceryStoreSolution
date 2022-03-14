@@ -1,0 +1,126 @@
+﻿@page "{productid?}"
+@model WebApp.Pages.CRUDProductModel
+@{
+    ViewData["Description"] = "CRUD Product";
+}
+
+@* this section is found on the _Layout at the bottom
+       it is optional
+       it allows us to add specific items to a specific page
+       double check the script references in the file in your wwwroot.lib jquery folders*@
+@section Scripts{ 
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h1>Maintain Product</h1>
+
+<p style="font-weight:bold; color:forestgreen;">@Model.FeedBackMessage</p>
+<p style="font-weight:bold; color:firebrick;">@Model.ErrorMessage</p>
+
+<form method="post">
+    <label>
+        Product:
+        <input type="text" asp-for="Product.ProductId" data-val="false" />
+        <span asp-validation-for="Product.ProductId"></span>
+    </label>
+    <label>
+        Description:
+        <input type="text" asp-for="Product.Description" placeholder="enter the product title" />
+        <span asp-validation-for="Product.Description"></span>
+    </label>
+    @*<label>
+        Artist:
+        <select asp-for="Product.ArtistId">
+            @foreach (var item in Model.Artists)
+            {
+                //for New product, you have yet of obtain an instance of Product
+                //   therefore you CANNOT test to see if the ValueField == the Product instance
+                //Soultion: Have a test (first in conditions) that ensures you have
+                //   the ablumid (.HasValue) BEFORE you attempt to USE the supposed Product
+                //   instance
+                if (Model.albumid.HasValue && item.ValueId == Model.Product.ArtistId)
+                {
+                    <option value="@item.ValueId" selected>@item.DisplayText</option>
+                }
+                else
+                {
+                    <option value="@item.ValueId">@item.DisplayText</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Product.ArtistId"></span>
+    </label>
+    Description = item.Description,
+                Price = (decimal)item.Price,
+                Discount = (decimal)item.Discount,
+                UnitSize = item.UnitSize,
+                Taxable = item.Taxable
+    *@
+    <label>
+        Year:
+        <input type="number" asp-for="Product.Price" placeholder="enter the product price" />
+        <span asp-validation-for="Product.Price"></span>
+    </label>
+    <label>
+        Discount:
+        <input type="text" asp-for="Product.Discount" placeholder="enter the product discount" />
+        <span asp-validation-for="Product.Discount"></span>
+    </label>
+    <label>
+        UnitSize:
+        <input type="text" asp-for="Product.UnitSize" placeholder="enter the product unitsize" />
+        <span asp-validation-for="Product.UnitSize"></span>
+    </label>
+    <label>
+            Artist:
+            <select asp-for="Product.CatergoryId">
+                @foreach (var item in Model.Catergories)
+                {
+                    //for New album, you have yet of obtain an instance of Product
+                    //   therefore you CANNOT test to see if the ValueField == the Product instance
+                    //Soultion: Have a test (first in conditions) that ensures you have
+                    //   the ablumid (.HasValue) BEFORE you attempt to USE the supposed Product
+                    //   instance
+                    if (Model.productid.HasValue && item.ValueId == Model.Product.CatergoryId)
+                    {
+                        <option value="@item.ValueId" selected>@item.DisplayText</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ValueId">@item.DisplayText</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="Product.CatergoryId"></span>
+        </label>
+    <label>
+        Taxable:
+        <input type="text" asp-for="Product.Taxable" placeholder="enter the product taxable" />
+        <span asp-validation-for="Product.Taxable"></span>
+    </label>
+    @if (Model.Product != null)
+    {
+        <button type="submit" asp-page-handler="New" disabled>Save New</button>
+        <button type="submit" asp-page-handler="Update">Update</button>
+        @* add Javascript prompt for delete confirmation using the onclick *@
+        <button type="submit" asp-page-handler="Delete" formnovalidate
+                onclick="return confirm('Are you sure you wish to delete the product?')">
+            Delete
+        </button>
+        <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+        <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
+    }
+    else
+    {
+    <button type="submit" asp-page-handler="New">Save New</button>
+    <button type="submit" asp-page-handler="Update" disabled>Update</button>
+    @* add Javascript prompt for delete confirmation using the onclick *@
+    <button type="submit" asp-page-handler="Delete" formnovalidate disabled
+            onclick="return confirm('Are you sure you wish to delete the product?')">
+        Delete
+    </button>
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+    <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
+    }
+
+</form>
